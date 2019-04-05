@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Will you win the Game of Thrones?</title>
+    <link rel="stylesheet" href="./main.css">
+</head>
+
+<script>
+    // For prototyping purposes, we're going to randomly
+    // select 'right' or 'wrong' for the user's answer
+    function pickOne() {
+        let option = Math.random() > 0.5;
+        if(option > 0.5) {
+            window.location='right.html';
+        } else {
+            window.location='wrong.html';
+        }
+    }
+</script>
+
+<body>
+    <main role="main">
+        <section role="region">
+            <h2>Q | What is Petyr Baelish's sigil?</h2>
+            <form action="">
+                <input type="radio" name="gender" value="mockingbird"> Mockingbird<br>
+                <input type="radio" name="gender" value="wolf"> Wolf<br>
+                <input type="radio" name="gender" value="platypus"> Platypus
+            </form>
+            <div><a href="#" onClick="pickOne()">SUBMIT</a></div>
+            <div><span>1</span> out of 10</div>
+            <div><span>5</span> correct!</div>
+        </section>
+</body>
+
+</html>
