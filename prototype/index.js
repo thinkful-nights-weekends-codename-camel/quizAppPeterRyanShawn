@@ -1,3 +1,9 @@
+// $(
+//     () => {
+//         text = showQuestion(3)
+//         $('#anything').html(text);
+//     }
+// )
 
 
 // Show the question
@@ -7,10 +13,28 @@ function showQuestion(questionNumber) {
         Retrieve the 'question' object from the store. Use that object's values
         to populate the question HTML block. Return the block.
     */
-    // if(questionNumber)
-    // return `
-
-    // `;
+    if (questionNumber < STORE.length - 1) {
+        let question = STORE[questionNumber].question;
+        let options = STORE[questionNumber].options;
+        let totalQuestions = STORE.length;
+        
+        return `
+            <section role="region">
+                <h2>${question}</h2>
+                <form action="">
+                    <input type="radio" name="answer" value="0">${options[0]}<br>
+                    <input type="radio" name="answer" value="1">${options[1]}<br>
+                    <input type="radio" name="answer" value="2">${options[2]}<br>
+                    <input type="radio" name="answer" value="3">${options[3]}<br>
+                </form>
+                <div><button id="submit-answer">SUBMIT</button></div>
+                <div><span>${questionNumber + 1}</span> out of ${totalQuestions}</div>
+            </section>
+        `;
+    }
+    else {
+        assessScore();
+    }
 }
 
 
