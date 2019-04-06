@@ -5,6 +5,14 @@
 //     }
 // )
 
+// Testing showAnswerCorrect and showAnswerWrong
+$(
+    () => {
+        let text1 = showAnswerCorrect();
+        let text2 = showAnswerWrong("unicorns");
+        $('#anything').html(text1 + '<hr>' + text2);
+    }
+)
 
 // Show the question
 let questionNumber = 0;
@@ -18,7 +26,7 @@ function showQuestion(questionNumber) {
         let question = STORE[questionNumber].question;
         let options = STORE[questionNumber].options;
         let totalQuestions = STORE.length;
-        
+
         return `
             <section role="region">
                 <h2>${question}</h2>
@@ -66,15 +74,27 @@ function showAnswerCorrect() {
     // 
     // If user is on last question, 'next' button should advance user to end card (this would be function 'showFinalPage')
     // If user is not on last question, 'next' button should advance user to next question
+    return `
+        <section>
+            <h2>Atta boy, Podrick!</h2>
+            <h3>Congratulations! You're one step closer to sitting on the Iron Throne.</h3>
+            <button id="next-question">NEXT</button>
+        </section>
+    `;
 }
 
-
 // Show that answer is wrong
-function showAnswerWrong() {
+function showAnswerWrong(answer) {
     // show the answer...
     // 
     // If user is on last question, 'next' button should advance user to end card (this would be function 'showFinalPage')
-    // If user is not on last question, 'next' button should advance user to next question
+    // If user is not on last question, 'next' button should advance user to next question    
+    return `
+        <section>
+            <h2> Ser? My Lady?</h2>
+            <h3>Wrong! The correct answer was ${answer}</h3>
+            <button id="next-question">NEXT</button>
+        </section>`;
 }
 
 
