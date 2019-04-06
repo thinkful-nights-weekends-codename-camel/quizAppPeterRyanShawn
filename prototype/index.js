@@ -7,6 +7,7 @@
 
 
 // Show the question
+let questionNumber = 0;
 function showQuestion(questionNumber) {
     /*
         Take argument 'questionNumber', the current question the user is viewing.
@@ -39,12 +40,23 @@ function showQuestion(questionNumber) {
 
 
 // Check for the answer
-function checkAnswer(questionNumber, currentAnswer) {
-    // ...
-    // If answer is correct
-    // ... showAnswerCorrect()
-    // else
-    // ... showAnswerWrong()
+function checkAnswer(questionNumber) {
+   $('#submit-answer').on('submit', event => {
+    event.preventDefault();
+    let chosenAnswer = $('input:checked');
+    let correctAnswer = STORE[questionNumber].correct
+
+    if (chosenAnswer.val === correctAnswer){
+        $('section').remove;
+        showAnswerCorrect();
+        incrementScore();
+    }
+    else {
+        $('section').remove;
+        showAnswerWrong(correctAnswer);
+    }
+
+ })
 }
 
 
@@ -88,22 +100,28 @@ function startNewQuiz() {
 
 // ...
 function incrementScore() {
-    // score += 100;
+ let score = parseInt($('#current-score').attr('data-current-score')) ++;
+ $('#current-score').attr({'data-current-score' : score});
+ $('#current-score').text(score);
 }
 
 
 // ...
-function assessScore() {
-    /*
-    Identify user's final score
-    If score is less than 4
-        Direct user to 'crappy results' view
-        showFinalPage(0)
-    If score is 4 or more, but less than 8
-        Direct user to "i mean, you did fine. it's fine" view
-        showFinalPage(1)
-    If score is 8 or more
-        Direct user to "you won the throne" view
-        showFinalPage(2)
-    */
+function assessScore(score) {
+   if (score > 4){
+       showFinalPage(0);
+   } else if (score <= 8 && score >= 4){
+       showFinalPage(1);
+   } else if (score >= 8) {
+       showFinalPage(2);
+   }
+}
+
+
+
+function updateQuestion(){
+    $('#next-question').on('click', event => {
+        questionNumber++;
+        showQuestion();
+})
 }
