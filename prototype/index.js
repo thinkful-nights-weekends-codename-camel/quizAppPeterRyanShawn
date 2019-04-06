@@ -68,15 +68,45 @@ function showAnswerWrong() {
 
 // Show the final page with results
 function showFinalPage(rating) {
-    // ...
-    /*
-    If rating = 1
-        show mediocre results view
-    If rating = 2
-        show ok results view
-    Otherwise
-        show awesome results view
-    */
+    let score = parseInt($("#current-score").attr( "data-current-score" ));
+
+   switch (rating) {
+    case 1:
+        // show mediocre results view
+        return `
+            <section role="region">
+                <h1>Game Over</h1> 
+                <h2>You have lost the Game of Thrones!</h2>
+                <div><span>${score}</span> correct!</div>
+                <div><span>${STORE.length - score}</span> wrong!</div>
+                <button>Play Again?</button>
+            </section>
+        `;
+      break;
+    case 2:
+      // show ok results view
+      return `
+            <section role="region">
+                <h1>Game Over</h1> 
+                <h2>You have lost the Game of Thrones!</h2>
+                <div><span>${score}</span> correct!</div>
+                <div><span>${STORE.length - score}</span> wrong!</div>
+                <button>Play Again?</button>
+            </section>
+        `;
+      break;
+    default:
+      // show awesome results view
+      return `
+            <section role="region">
+                <h1>Game Over</h1> 
+                <h2>You have won the Game of Thrones!</h2>
+                <div><span>${score}</span> correct!</div>
+                <div><span>${STORE.length - score}</span> wrong!</div>
+                <button>Play Again?</button>
+            </section>
+        `;
+  }
 }
 
 
