@@ -1,31 +1,44 @@
-// $(
-//     () => {
-//         text = showQuestion(3)
-//         $('#anything').html(text);
-//     }
-// )
+//  IMPORTANT TEMPORARY NOTES FOR REFERENCE
+/*  
+    The following adjustments should make it so that
+    all of our data resides in the STORE. No global
+    variables and no need to store variables inside
+    a span's attributes. OK, so:
+
+    * STORE is now an object that contains questions,
+      our array of question objects.
+    * STORE also now contains currentScore and currentQuestion.
+      We can use these values to keep track of the current
+      score and the current question
+    * STORE contains a method, increaseScore, which will
+      increase the current score. To use it, call STORE.increaseScore
+    * We should probably add another method, incrementQuestion,
+      that just bumps the value of currentQuestion up by 1
+*/
 
 // Testing showAnswerCorrect and showAnswerWrong
 $(
     () => {
+        let questionIndex = STORE.currentQuestion;
         let text1 = showAnswerCorrect();
         let text2 = showAnswerWrong("unicorns");
-        $('#anything').html(text1 + '<hr>' + text2);
+        let text3 = showQuestion(questionIndex);
+        $('#anything').html(text3 + '<hr>' + text1 + '<hr>' + text2);
     }
 )
 
 // Show the question
-let questionNumber = 0;
 function showQuestion(questionNumber) {
     /*
         Take argument 'questionNumber', the current question the user is viewing.
         Retrieve the 'question' object from the store. Use that object's values
         to populate the question HTML block. Return the block.
     */
-    if (questionNumber < STORE.length - 1) {
-        let question = STORE[questionNumber].question;
-        let options = STORE[questionNumber].options;
-        let totalQuestions = STORE.length;
+   let questionCount = STORE.questions.length;
+
+    if (questionNumber < questionCount - 1) {
+        let question = STORE.questions[questionNumber].question;
+        let options = STORE.questions[questionNumber].options;
 
         return `
             <section role="region">
@@ -37,7 +50,7 @@ function showQuestion(questionNumber) {
                     <input type="radio" name="answer" value="3">${options[3]}<br>
                 </form>
                 <div><button id="submit-answer">SUBMIT</button></div>
-                <div><span>${questionNumber + 1}</span> out of ${totalQuestions}</div>
+                <div><span>${questionNumber + 1}</span> out of ${questionCount}</div>
             </section>
         `;
     }
@@ -52,7 +65,7 @@ function checkAnswer(questionNumber) {
    $('#submit-answer').on('submit', event => {
     event.preventDefault();
     let chosenAnswer = $('input:checked');
-    let correctAnswer = STORE[questionNumber].correct
+    let correctAnswer = STORE.questions[questionNumber].correct
 
     if (chosenAnswer.val === correctAnswer){
         $('section').remove;
@@ -101,6 +114,7 @@ function showAnswerWrong(answer) {
 // Show the final page with results
 function showFinalPage(rating) {
     let score = parseInt($("#current-score").attr( "data-current-score" ));
+    let questionCount = STORE.questions.length;
 
    switch (rating) {
     case 1:
@@ -110,7 +124,7 @@ function showFinalPage(rating) {
                 <h1>Game Over</h1> 
                 <h2>You have lost the Game of Thrones!</h2>
                 <div><span>${score}</span> correct!</div>
-                <div><span>${STORE.length - score}</span> wrong!</div>
+                <div><span>${questionCount - score}</span> wrong!</div>
                 <button>Play Again?</button>
             </section>
         `;
@@ -122,7 +136,7 @@ function showFinalPage(rating) {
                 <h1>Game Over</h1> 
                 <h2>You have lost the Game of Thrones!</h2>
                 <div><span>${score}</span> correct!</div>
-                <div><span>${STORE.length - score}</span> wrong!</div>
+                <div><span>${questionCount - score}</span> wrong!</div>
                 <button>Play Again?</button>
             </section>
         `;
@@ -134,7 +148,7 @@ function showFinalPage(rating) {
                 <h1>Game Over</h1> 
                 <h2>You have won the Game of Thrones!</h2>
                 <div><span>${score}</span> correct!</div>
-                <div><span>${STORE.length - score}</span> wrong!</div>
+                <div><span>${questionCount - score}</span> wrong!</div>
                 <button>Play Again?</button>
             </section>
         `;

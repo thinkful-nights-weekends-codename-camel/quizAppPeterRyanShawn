@@ -1,4 +1,7 @@
-const STORE = [
+const STORE = {
+  currentScore: 0,
+  currentQuestion: 0,
+  questions: [
      {
         question: "What is the surname given to bastards born in the Riverlands?",
         options: ["Snow", "Rivers", "Sand", "Stone"],
@@ -49,7 +52,8 @@ const STORE = [
        question: "What is the name of the women assigned to train Arya at the House of Black and White?",
        options: ["The Woman", "The Whore", "The Waif", "Melisandre"],
        correct: 2
-      }
-
-    
-    ]
+      }],
+    increaseScore: function() {
+      this.currentScore++;
+    }
+}
