@@ -21,8 +21,8 @@ function showQuestion() {
                     <input type="radio" name="answer" value="1">${options[1]}<br>
                     <input type="radio" name="answer" value="2">${options[2]}<br>
                     <input type="radio" name="answer" value="3">${options[3]}<br>
+                    <div><button id="submit-answer">SUBMIT</button></div>
                 </form>
-                <div><button id="submit-answer">SUBMIT</button></div>
             </section>
         `;
     }
@@ -45,19 +45,20 @@ function renderQuestion () {
 
 // Check for the answer
 function checkAnswer() {
-    $('form').on('submit', event => {
+    $('.generate-questions').on('submit', event => {
         event.preventDefault();
         let chosenAnswer = $('input:checked');
+        let value = parseInt(chosenAnswer.val());
+        let questionNumber = STORE.currentQuestion;
+
         console.log(chosenAnswer);
         let correctAnswer = STORE.questions[questionNumber].correct;
 
-        if (chosenAnswer.val === correctAnswer) {
-            $('.generate-questions').remove();
+        if (value === correctAnswer) {
             showAnswerCorrect();
             STORE.increaseScore();
         }
         else {
-            $('.generate-questions').remove();
             showAnswerWrong(correctAnswer);
         }
 
@@ -78,24 +79,26 @@ function showAnswerCorrect() {
         </section>
     `
     ;
-    $('.generateQuestion').html(newHTML); 
+    $('.generate-questions').html(newHTML); 
 }
 
 // Show that answer is wrong
-function showAnswerWrong(answer) {
+function showAnswerWrong() {
     // show the answer...
     // 
     // If user is on last question, 'next' button should advance user to end card (this would be function 'showFinalPage')
     // If user is not on last question, 'next' button should advance user to next question    
+    let questionNumber = STORE.currentQuestion;
+    let correctAnswer = STORE.questions[questionNumber].correct;
     let newHTML = 
     `
         <section>
             <h2> Ser? My Lady?</h2>
-            <h3>Wrong! The correct answer was ${answer}</h3>
+            <h3>Wrong! The correct answer was ${STORE.questions[questionNumber].options[correctAnswer]}</h3>
             <button id="next-question">NEXT</button>
         </section>`;
 
-    $('.generateQuestion').html(newHTML);
+    $('.generate-questions').html(newHTML);
 }
 
 
@@ -143,9 +146,9 @@ function showFinalPage(rating) {
 
 
 function startNewQuiz() {
-    $('#play-again').on('click', '.restart-quiz', event => {
-        location.reload();
-    })
+    // $('#play-again').on('click', '.restart-quiz', event => {
+    //     location.reload();
+    // })
 }
 
 
@@ -161,7 +164,7 @@ function assessScore(score) {
 }
 
 function renderNextQuestion(){
-    $('#next-question').on('click', '.restart-quiz', event => {
+    $('.generate-questions').on('click', '#next-question', event => {
         STORE.increaseQuestion();
         showQuestion();
         checkAnswer();

@@ -5,7 +5,7 @@ const STORE = {
      {
         question: "What is the surname given to bastards born in the Riverlands?",
         options: ["Snow", "Rivers", "Sand", "Stone"],
-        correct: 1 
+        correct: 1
      },
       {
         question: "Who does Tyrion intially declare as his champion at the Eyrie?",
