@@ -8,6 +8,7 @@ function showQuestion() {
     */
     let questionCount = STORE.questions.length;
     let questionNumber = STORE.currentQuestion;
+    let correctSoFar = STORE.currentScore;
 
     if (questionNumber < questionCount - 1) {
         let question = STORE.questions[questionNumber].question;
@@ -16,13 +17,17 @@ function showQuestion() {
         return `
             <section role="region">
                 <h2>${question}</h2>
+                <fieldset>
                 <form action="">
-                    <input type="radio" name="answer" value="0">${options[0]}<br>
+                    <input type="radio" name="answer" value="0" required>${options[0]}<br>
                     <input type="radio" name="answer" value="1">${options[1]}<br>
                     <input type="radio" name="answer" value="2">${options[2]}<br>
                     <input type="radio" name="answer" value="3">${options[3]}<br>
                     <div><button id="submit-answer">SUBMIT</button></div>
                 </form>
+                </fieldset>
+                <div><span>${correctSoFar}</span>/${questionCount}</div> 
+                <div><span>${questionNumber + 1}</span></div>
             </section>
         `;
     }
@@ -31,7 +36,7 @@ function showQuestion() {
     }
 }
 
-function startQuiz(){
+function startQuiz() {
     $('#start-page').on('click', '.start-quiz', event => {
         // STORE.increaseQuestion();
         $('#start-page').remove();
@@ -39,7 +44,7 @@ function startQuiz(){
     })
 }
 
-function renderQuestion () {
+function renderQuestion() {
     $('.generate-questions').html(showQuestion);
 }
 
@@ -53,8 +58,8 @@ function checkAnswer() {
         let correctAnswer = STORE.questions[questionNumber].correct;
 
         if (value === correctAnswer) {
-            showAnswerCorrect();
             STORE.increaseScore();
+            showAnswerCorrect();
         }
         else {
             showAnswerWrong(correctAnswer);
@@ -69,15 +74,20 @@ function showAnswerCorrect() {
     // 
     // If user is on last question, 'next' button should advance user to end card (this would be function 'showFinalPage')
     // If user is not on last question, 'next' button should advance user to next question
+    let questionNumber = STORE.currentQuestion;
+    let questionCount = STORE.questions.length;
+    let correctSoFar = STORE.currentScore;
     let newHTML = `
         <section>
             <h2>Atta boy, Podrick!</h2>
             <h3>Congratulations! You're one step closer to sitting on the Iron Throne.</h3>
             <button id="next-question">NEXT</button>
+            <div><span>${correctSoFar}</span>/${questionCount}</div> 
+            <div><span>${questionNumber + 1}</span></div>
         </section>
     `
-    ;
-    $('.generate-questions').html(newHTML); 
+        ;
+    $('.generate-questions').html(newHTML);
 }
 
 // Show that answer is wrong
@@ -86,14 +96,18 @@ function showAnswerWrong() {
     // 
     // If user is on last question, 'next' button should advance user to end card (this would be function 'showFinalPage')
     // If user is not on last question, 'next' button should advance user to next question    
+    let questionCount = STORE.questions.length;
+    let correctSoFar = STORE.currentScore;
     let questionNumber = STORE.currentQuestion;
     let correctAnswer = STORE.questions[questionNumber].correct;
-    let newHTML = 
-    `
+    let newHTML =
+        `
         <section>
             <h2> Ser? My Lady?</h2>
             <h3>Wrong! The correct answer was ${STORE.questions[questionNumber].options[correctAnswer]}</h3>
             <button id="next-question">NEXT</button>
+            <div><span>${correctSoFar}</span>/${questionCount}</div> 
+            <div><span>${questionNumber + 1}</span></div>
         </section>`;
 
     $('.generate-questions').html(newHTML);
@@ -108,7 +122,7 @@ function showFinalPage(rating) {
     switch (rating) {
         case 0:
             // show mediocre results view
-            $('.generate-questions').html( `
+            $('.generate-questions').html(`
             <section role="region">
                 <h1>Game Over</h1> 
                 <h2>You have lost the Game of Thrones!</h2>
@@ -119,7 +133,7 @@ function showFinalPage(rating) {
             break;
         case 1:
             // show ok results view
-            $('.generate-questions').html (`
+            $('.generate-questions').html(`
             <section role="region">
                 <h1>Game Over</h1> 
                 <h2>You have lost the Game of Thrones!</h2>
@@ -160,7 +174,7 @@ function assessScore() {
     }
 }
 
-function renderNextQuestion(){
+function renderNextQuestion() {
     $('.generate-questions').on('click', '#next-question', event => {
         event.preventDefault();
         STORE.increaseQuestion();
@@ -169,16 +183,16 @@ function renderNextQuestion(){
     })
 }
 
-function updateQuestionNumber(){
+function updateQuestionNumber() {
     $('.current-question').text(STORE.currentQuestion);
 }
 
-function updateScoreNumber(){
+function updateScoreNumber() {
     $('.current-score').text(STORE.currentScore);
 }
-   
 
-function callQuizFunctions(){
+
+function callQuizFunctions() {
     startQuiz();
     showQuestion();
     checkAnswer();
