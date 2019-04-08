@@ -1,24 +1,13 @@
 
-
-// Testing showAnswerCorrect and showAnswerWrong
-$(
-    () => {
-        let questionIndex = STORE.currentQuestion;
-        let text1 = showAnswerCorrect();
-        let text2 = showAnswerWrong("unicorns");
-        let text3 = showQuestion(questionIndex);
-        $('#anything').html(text3 + '<hr>' + text1 + '<hr>' + text2);
-    }
-)
-
 // Show the question
-function showQuestion(questionNumber) {
+function showQuestion() {
     /*
         Take argument 'questionNumber', the current question the user is viewing.
         Retrieve the 'question' object from the store. Use that object's values
         to populate the question HTML block. Return the block.
     */
     let questionCount = STORE.questions.length;
+    let questionNumber = STORE.currentQuestion;
 
     if (questionNumber < questionCount - 1) {
         let question = STORE.questions[questionNumber].question;
@@ -54,7 +43,7 @@ function checkAnswer(questionNumber) {
         if (chosenAnswer.val === correctAnswer) {
             $('section').remove;
             showAnswerCorrect();
-            incrementScore();
+            STORE.increaseScore();
         }
         else {
             $('section').remove;
@@ -81,12 +70,6 @@ function showAnswerCorrect() {
     ;
     $('.generateQuestion').html(newHTML);
    
-}
-
-
-
-function renderAnswerWrong(){
-    $('.generateQuestion').html(showAnswerWrong());
 }
 
 // Show that answer is wrong
@@ -175,3 +158,34 @@ function renderNextQuestion(){
         checkAnswer();
     })
 }
+
+function callQuizFunctions (){
+    startNewQuiz();
+    showQuestion();
+    checkAnswer();
+    renderNextQuestion();
+}
+function startQuiz(){
+    $('#start-page').on('click', '.start-quiz', event => {
+        STORE.increaseQuestion();
+        $('#start-page').remove();
+        renderQuestion();
+
+
+})
+
+function renderQuestion () {
+    $('.generate-questions').html(showQuestion);
+}
+
+function updateQuestionNumber(){
+    $('.current-question').text(STORE.currentQuestion);
+}
+function updateScoreNumber(){
+    $('.current-score').text(STORE.currentScore);
+}
+   
+
+}
+$(callQuizFunctions);
+

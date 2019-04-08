@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,21 +8,23 @@
     <title>Will you win the Game of Thrones?</title>
     <link rel="stylesheet" href="./main.css">
 </head>
+
 <body>
     <main role="main">
-        <section role="region">
-            <h1>Will you win the Game of Thrones?</h1> 
-            <h2>"When you play the game of thrones, you win or you die. There is no middle ground."</h2>
-            <a href="./question.html">Let's begin</a>
-            <div><span>1</span> out of 10</div>
-            <div><span>5</span> correct!</div>
+        <section id="start-page" role="region">
+            <h1>Will you win the Game of Thrones?</h1>
+            <h4 class="quote"> When you play the game of thrones, you win or you die. There is no middle ground. </h4>
+            <p class="credit">– Cersei Lannister</p>
+            <button class="start-quiz">Let's begin</a>
         </section>
-        <hr>
-        <div id="anything"></div>
+        <div><span class="current-question">1</span> out of 10</div>
+        <div><span class="current-score">5</span> correct!</div>
+        <div class="generate-questions"></div>
     </main>
 
     <script src="//code.jquery.com/jquery.min.js"></script>
     <script src="./store.js"></script>
     <script src="./index.js"></script>
 </body>
+
 </html>
