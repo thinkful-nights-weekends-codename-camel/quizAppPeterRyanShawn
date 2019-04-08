@@ -23,7 +23,6 @@ function showQuestion() {
                     <input type="radio" name="answer" value="3">${options[3]}<br>
                 </form>
                 <div><button id="submit-answer">SUBMIT</button></div>
-                <div><span>${questionNumber + 1}</span> out of ${questionCount}</div>
             </section>
         `;
     }
@@ -32,27 +31,38 @@ function showQuestion() {
     }
 }
 
+function startQuiz(){
+    $('#start-page').on('click', '.start-quiz', event => {
+        // STORE.increaseQuestion();
+        $('#start-page').remove();
+        renderQuestion();
+    })
+}
+
+function renderQuestion () {
+    $('.generate-questions').html(showQuestion);
+}
 
 // Check for the answer
-function checkAnswer(questionNumber) {
-    $('#submit-answer').on('submit', event => {
+function checkAnswer() {
+    $('form').on('submit', event => {
         event.preventDefault();
         let chosenAnswer = $('input:checked');
-        let correctAnswer = STORE.questions[questionNumber].correct
+        console.log(chosenAnswer);
+        let correctAnswer = STORE.questions[questionNumber].correct;
 
         if (chosenAnswer.val === correctAnswer) {
-            $('section').remove;
+            $('.generate-questions').remove();
             showAnswerCorrect();
             STORE.increaseScore();
         }
         else {
-            $('section').remove;
+            $('.generate-questions').remove();
             showAnswerWrong(correctAnswer);
         }
 
     })
 }
-
 
 // Show that answer is correct
 function showAnswerCorrect() {
@@ -68,8 +78,7 @@ function showAnswerCorrect() {
         </section>
     `
     ;
-    $('.generateQuestion').html(newHTML);
-   
+    $('.generateQuestion').html(newHTML); 
 }
 
 // Show that answer is wrong
@@ -159,33 +168,20 @@ function renderNextQuestion(){
     })
 }
 
-function callQuizFunctions (){
-    startNewQuiz();
-    showQuestion();
-    checkAnswer();
-    renderNextQuestion();
-}
-function startQuiz(){
-    $('#start-page').on('click', '.start-quiz', event => {
-        STORE.increaseQuestion();
-        $('#start-page').remove();
-        renderQuestion();
-
-
-})
-
-function renderQuestion () {
-    $('.generate-questions').html(showQuestion);
-}
-
 function updateQuestionNumber(){
     $('.current-question').text(STORE.currentQuestion);
 }
+
 function updateScoreNumber(){
     $('.current-score').text(STORE.currentScore);
 }
    
 
+function callQuizFunctions(){
+    startQuiz();
+    showQuestion();
+    checkAnswer();
+    renderNextQuestion();
 }
-$(callQuizFunctions);
 
+$(callQuizFunctions);
