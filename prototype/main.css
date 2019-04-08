@@ -97,3 +97,65 @@ fieldset {
 .status-bar {
     margin-top: 1.5em;
 }
+
+
+
+
+/*
+ * ---------------------------------------------------------------- 
+ *  STYLES AT RESPONSIVE BREAKPOINTS
+ * ---------------------------------------------------------------- 
+*/
+
+
+/* Small devices (portrait tablets and large phones, 320px and up) */
+@media only screen and (min-width: 320px) {
+    main {
+        padding: 2em;
+        max-width: 220px;
+    }
+    main h1.quote {
+        font-size: 1.6em;
+        line-height: 1.4em;
+    }
+    
+    #start-page h3 {
+        margin-top: 15px;
+    }
+
+    p.credit {
+        margin-bottom: 15px;
+    }
+} 
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    /* main {
+        background: blue;
+    } */
+} 
+
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    /* main {
+        background: yellow;
+    } */
+} 
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    /* main {
+        background: green;
+    } */
+} 
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    /* main {
+        background: black;
+    } */
+}
