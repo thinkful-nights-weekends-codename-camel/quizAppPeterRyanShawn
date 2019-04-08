@@ -9,7 +9,7 @@ function showQuestion() {
     let questionCount = STORE.questions.length;
     let questionNumber = STORE.currentQuestion;
 
-    if (questionNumber < questionCount - 1) {
+    if (questionNumber < 2) { // questionCount - 1) 
         let question = STORE.questions[questionNumber].question;
         let options = STORE.questions[questionNumber].options;
 
@@ -104,57 +104,60 @@ function showAnswerWrong() {
 
 // Show the final page with results
 function showFinalPage(rating) {
+    console.log("yoyoyo");
     let score = STORE.currentScore;
     let questionCount = STORE.questions.length;
 
     switch (rating) {
-        case 1:
+        case 0:
+            console.log("Hello from space");
             // show mediocre results view
-            $('.generateQuestion').html( `
+            $('.generate-questions').html( `
             <section role="region">
                 <h1>Game Over</h1> 
                 <h2>You have lost the Game of Thrones!</h2>
-                <div><span>${STORE.currentScore}</span> correct!</div>
-                <div><span>${STORE.currentQuestion - STORE.currentScore}</span> wrong!</div>
-                <button class="restart-quiz" id="play-again">Play Again?</button>
+                <div><span>${score}</span> correct!</div>
+                <div><span>${questionCount - score}</span> wrong!</div>
+                <button id="restart-quiz">Play Again?</button>
+            </section>`);
+            break;
+        case 1:
+            // show ok results view
+            $('.generate-questions').html (`
+            <section role="region">
+                <h1>Game Over</h1> 
+                <h2>You have lost the Game of Thrones!</h2>
+                <div><span>${score}</span> correct!</div>
+                <div><span>${questionCount - score}</span> wrong!</div>
+                <button id="restart-quiz">Play Again?</button>
             </section>`);
             break;
         case 2:
-            // show ok results view
-            $('.generateQuestion').html (`
-            <section role="region">
-                <h1>Game Over</h1> 
-                <h2>You have lost the Game of Thrones!</h2>
-                <div><span>${STORE.currentScore}</span> correct!</div>
-                <div><span>${STORE.currentQuestion - STORE.currentScore}</span> wrong!</div>
-                <button class="restart-quiz" id="play-again">Play Again?</button>
-            </section>`);
-            break;
-        default:
             // show awesome results view
-            $('.generateQuestion').html(`
+            $('.generate-questions').html(`
             <section role="region">
                 <h1>Game Over</h1> 
                 <h2>You have won the Game of Thrones!</h2>
-                <div><span>${STORE.currentScore}</span> correct!</div>
-                <div><span>${STORE.currentQuestion - STORE.currentScore}</span> wrong!</div>
-                <button class="restart-quiz" id="play-again">Play Again?</button>
+                <div><span>${score}</span> correct!</div>
+                <div><span>${questionCount - score}</span> wrong!</div>
+                <button id="restart-quiz">Play Again?</button>
             </section>`);
     }
 }
 
-
-
 function startNewQuiz() {
-    // $('#play-again').on('click', '.restart-quiz', event => {
-    //     location.reload();
-    // })
+    console.log("new console log");
+    $('.generate-questions').on('click', '#restart-quiz', event => {
+        location.reload();
+    })
 }
 
 
 // Assess user's score
-function assessScore(score) {
-    if (score > 4) {
+function assessScore() {
+    let score = STORE.currentScore;
+    console.log(score);
+    if (score < 4) {
         showFinalPage(0);
     } else if (score <= 8 && score >= 4) {
         showFinalPage(1);
@@ -165,9 +168,10 @@ function assessScore(score) {
 
 function renderNextQuestion(){
     $('.generate-questions').on('click', '#next-question', event => {
+        event.preventDefault();
         STORE.increaseQuestion();
-        showQuestion();
-        checkAnswer();
+        renderQuestion();
+        // checkAnswer();
     })
 }
 
@@ -185,6 +189,7 @@ function callQuizFunctions(){
     showQuestion();
     checkAnswer();
     renderNextQuestion();
+    startNewQuiz();
 }
 
 $(callQuizFunctions);
