@@ -71,13 +71,22 @@ function showAnswerCorrect() {
     // 
     // If user is on last question, 'next' button should advance user to end card (this would be function 'showFinalPage')
     // If user is not on last question, 'next' button should advance user to next question
-    return `
+    let newHTML = `
         <section>
             <h2>Atta boy, Podrick!</h2>
             <h3>Congratulations! You're one step closer to sitting on the Iron Throne.</h3>
             <button id="next-question">NEXT</button>
         </section>
-    `;
+    `
+    ;
+    $('.generateQuestion').html(newHTML);
+   
+}
+
+
+
+function renderAnswerWrong(){
+    $('.generateQuestion').html(showAnswerWrong());
 }
 
 // Show that answer is wrong
@@ -86,12 +95,15 @@ function showAnswerWrong(answer) {
     // 
     // If user is on last question, 'next' button should advance user to end card (this would be function 'showFinalPage')
     // If user is not on last question, 'next' button should advance user to next question    
-    return `
+    let newHTML = 
+    `
         <section>
             <h2> Ser? My Lady?</h2>
             <h3>Wrong! The correct answer was ${answer}</h3>
             <button id="next-question">NEXT</button>
         </section>`;
+
+    $('.generateQuestion').html(newHTML);
 }
 
 
@@ -103,46 +115,45 @@ function showFinalPage(rating) {
     switch (rating) {
         case 1:
             // show mediocre results view
-            return `
+            $('.generateQuestion').html( `
             <section role="region">
                 <h1>Game Over</h1> 
                 <h2>You have lost the Game of Thrones!</h2>
-                <div><span>${score}</span> correct!</div>
-                <div><span>${questionCount - score}</span> wrong!</div>
+                <div><span>${STORE.currentScore}</span> correct!</div>
+                <div><span>${STORE.currentQuestion - STORE.currentScore}</span> wrong!</div>
                 <button class="restart-quiz" id="play-again">Play Again?</button>
-            </section>
-        `;
+            </section>`);
             break;
         case 2:
             // show ok results view
-            return `
+            $('.generateQuestion').html (`
             <section role="region">
                 <h1>Game Over</h1> 
                 <h2>You have lost the Game of Thrones!</h2>
-                <div><span>${score}</span> correct!</div>
-                <div><span>${questionCount - score}</span> wrong!</div>
+                <div><span>${STORE.currentScore}</span> correct!</div>
+                <div><span>${STORE.currentQuestion - STORE.currentScore}</span> wrong!</div>
                 <button class="restart-quiz" id="play-again">Play Again?</button>
-            </section>
-        `;
+            </section>`);
             break;
         default:
             // show awesome results view
-            return `
+            $('.generateQuestion').html(`
             <section role="region">
                 <h1>Game Over</h1> 
                 <h2>You have won the Game of Thrones!</h2>
-                <div><span>${score}</span> correct!</div>
-                <div><span>${questionCount - score}</span> wrong!</div>
+                <div><span>${STORE.currentScore}</span> correct!</div>
+                <div><span>${STORE.currentQuestion - STORE.currentScore}</span> wrong!</div>
                 <button class="restart-quiz" id="play-again">Play Again?</button>
-            </section>
-        `;
+            </section>`);
     }
 }
 
 
-// Start a new quiz
+
 function startNewQuiz() {
-    // ...
+    $('#play-again').on('click', '.restart-quiz', event => {
+        location.reload();
+    })
 }
 
 
@@ -155,4 +166,12 @@ function assessScore(score) {
     } else if (score >= 8) {
         showFinalPage(2);
     }
+}
+
+function renderNextQuestion(){
+    $('#next-question').on('click', '.restart-quiz', event => {
+        STORE.increaseQuestion();
+        showQuestion();
+        checkAnswer();
+    })
 }
