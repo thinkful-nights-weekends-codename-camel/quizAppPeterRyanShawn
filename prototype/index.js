@@ -1,31 +1,28 @@
-// $(
-//     () => {
-//         text = showQuestion(3)
-//         $('#anything').html(text);
-//     }
-// )
+
 
 // Testing showAnswerCorrect and showAnswerWrong
 $(
     () => {
+        let questionIndex = STORE.currentQuestion;
         let text1 = showAnswerCorrect();
         let text2 = showAnswerWrong("unicorns");
-        $('#anything').html(text1 + '<hr>' + text2);
+        let text3 = showQuestion(questionIndex);
+        $('#anything').html(text3 + '<hr>' + text1 + '<hr>' + text2);
     }
 )
 
 // Show the question
-let questionNumber = 0;
 function showQuestion(questionNumber) {
     /*
         Take argument 'questionNumber', the current question the user is viewing.
         Retrieve the 'question' object from the store. Use that object's values
         to populate the question HTML block. Return the block.
     */
-    if (questionNumber < STORE.length - 1) {
-        let question = STORE[questionNumber].question;
-        let options = STORE[questionNumber].options;
-        let totalQuestions = STORE.length;
+    let questionCount = STORE.questions.length;
+
+    if (questionNumber < questionCount - 1) {
+        let question = STORE.questions[questionNumber].question;
+        let options = STORE.questions[questionNumber].options;
 
         return `
             <section role="region">
@@ -37,7 +34,7 @@ function showQuestion(questionNumber) {
                     <input type="radio" name="answer" value="3">${options[3]}<br>
                 </form>
                 <div><button id="submit-answer">SUBMIT</button></div>
-                <div><span>${questionNumber + 1}</span> out of ${totalQuestions}</div>
+                <div><span>${questionNumber + 1}</span> out of ${questionCount}</div>
             </section>
         `;
     }
@@ -49,22 +46,22 @@ function showQuestion(questionNumber) {
 
 // Check for the answer
 function checkAnswer(questionNumber) {
-   $('#submit-answer').on('submit', event => {
-    event.preventDefault();
-    let chosenAnswer = $('input:checked');
-    let correctAnswer = STORE[questionNumber].correct
+    $('#submit-answer').on('submit', event => {
+        event.preventDefault();
+        let chosenAnswer = $('input:checked');
+        let correctAnswer = STORE.questions[questionNumber].correct
 
-    if (chosenAnswer.val === correctAnswer){
-        $('section').remove;
-        showAnswerCorrect();
-        incrementScore();
-    }
-    else {
-        $('section').remove;
-        showAnswerWrong(correctAnswer);
-    }
+        if (chosenAnswer.val === correctAnswer) {
+            $('section').remove;
+            showAnswerCorrect();
+            incrementScore();
+        }
+        else {
+            $('section').remove;
+            showAnswerWrong(correctAnswer);
+        }
 
- })
+    })
 }
 
 
@@ -100,45 +97,46 @@ function showAnswerWrong(answer) {
 
 // Show the final page with results
 function showFinalPage(rating) {
-    let score = parseInt($("#current-score").attr( "data-current-score" ));
+    let score = STORE.currentScore;
+    let questionCount = STORE.questions.length;
 
-   switch (rating) {
-    case 1:
-        // show mediocre results view
-        return `
+    switch (rating) {
+        case 1:
+            // show mediocre results view
+            return `
             <section role="region">
                 <h1>Game Over</h1> 
                 <h2>You have lost the Game of Thrones!</h2>
                 <div><span>${score}</span> correct!</div>
-                <div><span>${STORE.length - score}</span> wrong!</div>
-                <button>Play Again?</button>
+                <div><span>${questionCount - score}</span> wrong!</div>
+                <button class="restart-quiz" id="play-again">Play Again?</button>
             </section>
         `;
-      break;
-    case 2:
-      // show ok results view
-      return `
+            break;
+        case 2:
+            // show ok results view
+            return `
             <section role="region">
                 <h1>Game Over</h1> 
                 <h2>You have lost the Game of Thrones!</h2>
                 <div><span>${score}</span> correct!</div>
-                <div><span>${STORE.length - score}</span> wrong!</div>
-                <button>Play Again?</button>
+                <div><span>${questionCount - score}</span> wrong!</div>
+                <button class="restart-quiz" id="play-again">Play Again?</button>
             </section>
         `;
-      break;
-    default:
-      // show awesome results view
-      return `
+            break;
+        default:
+            // show awesome results view
+            return `
             <section role="region">
                 <h1>Game Over</h1> 
                 <h2>You have won the Game of Thrones!</h2>
                 <div><span>${score}</span> correct!</div>
-                <div><span>${STORE.length - score}</span> wrong!</div>
-                <button>Play Again?</button>
+                <div><span>${questionCount - score}</span> wrong!</div>
+                <button class="restart-quiz" id="play-again">Play Again?</button>
             </section>
         `;
-  }
+    }
 }
 
 
@@ -148,30 +146,13 @@ function startNewQuiz() {
 }
 
 
-// ...
-function incrementScore() {
- let score = parseInt($('#current-score').attr('data-current-score')) ++;
- $('#current-score').attr({'data-current-score' : score});
- $('#current-score').text(score);
-}
-
-
-// ...
+// Assess user's score
 function assessScore(score) {
-   if (score > 4){
-       showFinalPage(0);
-   } else if (score <= 8 && score >= 4){
-       showFinalPage(1);
-   } else if (score >= 8) {
-       showFinalPage(2);
-   }
-}
-
-
-
-function updateQuestion(){
-    $('#next-question').on('click', event => {
-        questionNumber++;
-        showQuestion();
-})
+    if (score > 4) {
+        showFinalPage(0);
+    } else if (score <= 8 && score >= 4) {
+        showFinalPage(1);
+    } else if (score >= 8) {
+        showFinalPage(2);
+    }
 }
