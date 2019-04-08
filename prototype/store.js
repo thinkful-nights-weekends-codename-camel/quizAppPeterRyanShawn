@@ -55,5 +55,8 @@ const STORE = {
       }],
     increaseScore: function() {
       this.currentScore++;
+    },
+    increaseQuestion: function() {
+      this.currentQuestion++;
     }
 }
