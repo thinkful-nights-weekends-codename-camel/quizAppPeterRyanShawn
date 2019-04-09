@@ -17,17 +17,20 @@ function showQuestion() {
         return `
             <section role="region">
                 <h2>${question}</h2>
+                <hr>
                 <fieldset>
-                <form action="">
-                    <input type="radio" name="answer" value="0" required>${options[0]}<br>
-                    <input type="radio" name="answer" value="1">${options[1]}<br>
-                    <input type="radio" name="answer" value="2">${options[2]}<br>
-                    <input type="radio" name="answer" value="3">${options[3]}<br>
-                    <div><button id="submit-answer">SUBMIT</button></div>
-                </form>
+                    <form action="">
+                        <input type="radio" name="answer" value="0" required>${options[0]}<br>
+                        <input type="radio" name="answer" value="1">${options[1]}<br>
+                        <input type="radio" name="answer" value="2">${options[2]}<br>
+                        <input type="radio" name="answer" value="3">${options[3]}
+                        <div class="btn-container"><button id="submit-answer">SUBMIT</button></div>
+                    </form>
                 </fieldset>
-                <div><span>${correctSoFar}</span>/${questionCount}</div> 
-                <div><span>${questionNumber + 1}</span></div>
+                <div class="status-bar">
+                    <div class="current-question"><span>Q | ${questionNumber + 1}</span></div>    
+                    <div class="current-status"><span>${correctSoFar}</span> / ${questionCount}</div> 
+                </div>
             </section>
         `;
     }
@@ -81,9 +84,13 @@ function showAnswerCorrect() {
         <section>
             <h2>Atta boy, Podrick!</h2>
             <h3>Congratulations! You're one step closer to sitting on the Iron Throne.</h3>
-            <button id="next-question">NEXT</button>
-            <div><span>${correctSoFar}</span>/${questionCount}</div> 
-            <div><span>${questionNumber + 1}</span></div>
+            <div class="btn-container">
+                <button id="next-question">NEXT</button>
+            </div>
+            <div class="status-bar">
+                <div class="current-question"><span>Q | ${questionNumber + 1}</span></div>    
+                <div class="current-status"><span>${correctSoFar}</span> / ${questionCount}</div> 
+            </div>
         </section>
     `
         ;
@@ -105,9 +112,13 @@ function showAnswerWrong() {
         <section>
             <h2> Ser? My Lady?</h2>
             <h3>Wrong! The correct answer was ${STORE.questions[questionNumber].options[correctAnswer]}</h3>
-            <button id="next-question">NEXT</button>
-            <div><span>${correctSoFar}</span>/${questionCount}</div> 
-            <div><span>${questionNumber + 1}</span></div>
+            <div class="btn-container">
+                <button id="next-question">NEXT</button>
+            </div>
+            <div class="status-bar">
+                <div class="current-question"><span>Q | ${questionNumber + 1}</span></div>    
+                <div class="current-status"><span>${correctSoFar}</span> / ${questionCount}</div> 
+            </div>
         </section>`;
 
     $('.generate-questions').html(newHTML);
@@ -128,7 +139,9 @@ function showFinalPage(rating) {
                 <h2>You have lost the Game of Thrones!</h2>
                 <div><span>${score}</span> correct!</div>
                 <div><span>${questionCount - score}</span> wrong!</div>
-                <button id="restart-quiz">Play Again?</button>
+                <div class="btn-container">
+                    <button id="restart-quiz">Play Again?</button>
+                </div>
             </section>`);
             break;
         case 1:

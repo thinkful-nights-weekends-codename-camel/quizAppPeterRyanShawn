@@ -1,29 +1,161 @@
 body, html {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 0;
+    margin: 0;
 }
+
 
 html {
     background: url(https://wallpaperplay.com/walls/full/6/7/5/225660.jpg) no-repeat center center fixed;
-    /* -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; */
     background-size: cover;
 }
+
 
 fieldset {
     border: 0px;
 }
 
+
 h1, h2, h3, h4, h5, h6 {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-h4.quote {
-    font-style: italic;
-    font-weight: 500;
-    margin-bottom: .3em;
+
+main h1, .generate-questions h2 {
+    margin-top: 0;
 }
+
+
+main h1.quote {
+    font-weight: 300;
+    font-size: 2.2em;
+    line-height: 1.4em;
+    font-style: italic;
+    margin-bottom: .4em;
+}
+
+#start-page h3 {
+    margin-top: 30px;
+}
+
 
 p.credit {
     margin-top: .3em;
+    margin-bottom: 30px;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-style: italic;
+}
+
+
+main {
+    padding: 2em;
+    max-width: 360px;
+    max-height: 440px;
+    background-color: rgba(0, 0, 0, .9);
+    color: #fff;
+    box-shadow: 4px 4px 20px 2px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 118, 0, 0.5)
+}
+
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+button {
+    padding: 6px;
+}
+
+.btn-container {
+    margin-top: 1.4em;
+}
+
+.btn-container button {
+    width: 100%;
+}
+
+fieldset {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.current-status {
+    display: inline-block;
+    float: right;
+}
+
+.current-question {
+    display: inline-block;
+    float: left;
+}
+
+.status-bar {
+    margin-top: 1.5em;
+}
+
+
+
+
+/*
+ * ---------------------------------------------------------------- 
+ *  STYLES AT RESPONSIVE BREAKPOINTS
+ * ---------------------------------------------------------------- 
+*/
+
+
+/* Small devices (portrait tablets and large phones, 320px and up) */
+@media only screen and (min-width: 320px) {
+    main {
+        padding: 2em;
+        max-width: 220px;
+    }
+    main h1.quote {
+        font-size: 1.6em;
+        line-height: 1.4em;
+    }
+    
+    #start-page h3 {
+        margin-top: 15px;
+    }
+
+    p.credit {
+        margin-bottom: 15px;
+    }
+} 
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    /* main {
+        background: blue;
+    } */
+} 
+
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    /* main {
+        background: yellow;
+    } */
+} 
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    /* main {
+        background: green;
+    } */
+} 
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    /* main {
+        background: black;
+    } */
 }
