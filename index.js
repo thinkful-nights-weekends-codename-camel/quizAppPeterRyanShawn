@@ -18,15 +18,24 @@ function showQuestion() {
             <section role="region">
                 <h2>${question}</h2>
                 <hr>
-                <fieldset>
                     <form action="">
-                        <input type="radio" name="answer" value="0" required>${options[0]}<br>
-                        <input type="radio" name="answer" value="1">${options[1]}<br>
-                        <input type="radio" name="answer" value="2">${options[2]}<br>
-                        <input type="radio" name="answer" value="3">${options[3]}
-                        <div class="btn-container"><button id="submit-answer">SUBMIT</button></div>
+                        <fieldset>
+                            <legend class="hide-legend">Answers</legend>                            
+                            <input id="answer_1" type="radio" name="answer" value="0" required>
+                            <label for="answer_1">${options[0]}</label><br>
+
+                            <input id="answer_2" type="radio" name="answer" value="1">
+                            <label for="answer_2">${options[1]}</label><br>
+
+                            <input id="answer_3" type="radio" name="answer" value="2">
+                            <label for="answer_3">${options[2]}</label><br>
+
+                            <input id="answer_4" type="radio" name="answer" value="3">
+                            <label for="answer_4">${options[3]}</label>
+
+                            <div class="btn-container"><button id="submit-answer">SUBMIT</button></div>
+                        </fieldset>
                     </form>
-                </fieldset>
                 <div class="status-bar">
                     <div class="current-question"><span>Q | ${questionNumber + 1}</span></div>    
                     <div class="current-status"><span>${correctSoFar}</span> / ${questionCount}</div> 
@@ -77,8 +86,8 @@ function showAnswerCorrect() {
     // 
     // If user is on last question, 'next' button should advance user to end card (this would be function 'showFinalPage')
     // If user is not on last question, 'next' button should advance user to next question
-    STORE.increaseQuestion();
     let questionNumber = STORE.currentQuestion;
+    STORE.increaseQuestion();
     let questionCount = STORE.questions.length;
     let correctSoFar = STORE.currentScore;
     let newHTML = `
@@ -89,7 +98,7 @@ function showAnswerCorrect() {
                 <button id="next-question">NEXT</button>
             </div>
             <div class="status-bar">
-                <div class="current-question"><span>Q | ${questionNumber}</span></div>    
+                <div class="current-question"><span>Q | ${questionNumber + 1}</span></div>    
                 <div class="current-status"><span>${correctSoFar}</span> / ${questionCount}</div> 
             </div>
         </section>
@@ -104,11 +113,12 @@ function showAnswerWrong() {
     // 
     // If user is on last question, 'next' button should advance user to end card (this would be function 'showFinalPage')
     // If user is not on last question, 'next' button should advance user to next question    
+    let questionNumber = STORE.currentQuestion;
+    let correctAnswer = STORE.questions[questionNumber].correct;
     STORE.increaseQuestion();
     let questionCount = STORE.questions.length;
     let correctSoFar = STORE.currentScore;
-    let questionNumber = STORE.currentQuestion;
-    let correctAnswer = STORE.questions[questionNumber].correct;
+
     let newHTML =
         `
         <section>
@@ -118,7 +128,7 @@ function showAnswerWrong() {
                 <button id="next-question">NEXT</button>
             </div>
             <div class="status-bar">
-                <div class="current-question"><span>Q | ${questionNumber}</span></div>    
+                <div class="current-question"><span>Q | ${questionNumber + 1}</span></div>    
                 <div class="current-status"><span>${correctSoFar}</span> / ${questionCount}</div> 
             </div>
         </section>`;

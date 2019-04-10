@@ -99,6 +99,14 @@ fieldset {
 }
 
 
+/* 
+ * So like when you want to include a <legend> element with
+ * your <fieldset> for accessibility, but you don't want the
+ * legend to be visible...
+*/
+.hide-legend {
+    position:absolute; clip:rect(0 0 0 0);
+}
 
 
 /*
