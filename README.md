@@ -1,7 +1,7 @@
 
 THINKFUL QUIZ APP PROJECT
 Team Members: Ryan Kaw / Peter Tardif / Shawn Jackson
-![alt text](https://raw.githubusercontent.com/thinkful-nights-weekends-codename-camel/quizAppPeterRyanShawn/master/prototype/assets/thinkful-quiz-app-napkin-design.jpg)
+![alt text](https://raw.githubusercontent.com/thinkful-nights-weekends-codename-camel/quizAppPeterRyanShawn/master/assets/thinkful-quiz-app-napkin-design.jpg)
 
 
 REQUIREMENTS
